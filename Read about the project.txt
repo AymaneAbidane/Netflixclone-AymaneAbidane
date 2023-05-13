@@ -1,0 +1,32 @@
+Project Console: https://console.firebase.google.com/project/netflixe-clone-1d013/overview
+Hosting URL: https://netflixe-clone-1d013.web.app
+
+
+firebase Rules in firestore:
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /customers/{uid}{
+       allow read: if request.auth.uid == uid;
+       
+       match /chekout_sessions/{id}{
+         allow read, write :if request.auth.uid ==uid;
+       }
+       
+       match /subscriptions/{id}{
+         allow read:if request.auth.uid == uid;
+       }
+    }
+    
+     match /products/{id}{
+       allow read: if true;
+       
+       match /prices/{id}{
+          allow read:if true;
+       }
+       match /tax_rates/{id}{
+           allow read: if true;
+       }
+     }
+   }  
+}
